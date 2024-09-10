@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 exports.handler = async function(event, context) {
     const shopifyStorefrontToken = process.env.Storefront_test_token; // Your Storefront API token
     const shopifyStore = 'eplehusettest.myshopify.com'; // Replace with your actual Shopify store URL
-    const graphqlEndpoint = `https://${shopifyStore}/api/2024-07/graphql.json`;
+    const graphqlEndpoint = `https://${shopifyStore}/api/2023-01/graphql.json`;
 
     const { id, quantity } = JSON.parse(event.body);
 
