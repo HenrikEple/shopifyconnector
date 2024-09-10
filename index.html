@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify API Test</title>
+</head>
+<body>
+    <h1>Test Shopify API</h1>
+    <button id="get-products">Get Products</button>
+    <div id="output"></div>
+
+    <script>
+        document.getElementById('get-products').addEventListener('click', async function() {
+            const response = await fetch('/.netlify/functions/shopify-api');
+            const data = await response.json();
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        });
+    </script>
+</body>
+</html>
