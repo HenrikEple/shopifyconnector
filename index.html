@@ -30,7 +30,7 @@
             border: 1px solid #ccc;
             padding: 20px;
             margin-bottom: 20px;
-            margin-left:20px; 
+            margin-left: 20px;
             margin-right: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -63,14 +63,21 @@
             margin-bottom: 10px;
         }
 
-        #output{
+        #output {
             padding: 20px 0;
         }
 
-        .btn{
-            text-align: center;
+        /* Center content */
+        .center-buttons {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
+        .btn{
+            margin-bottom: 10px; /* Space between buttons */
+        }
     </style>
 </head>
 <body>
@@ -80,10 +87,16 @@
     </div>
 
     <h1 style="text-align: center;">Test Shopify API</h1>
-    <button type="button" class="btn btn-primary" id="get-products">Hent Elevmacprodukter</button>
-    <a href="https://login.idporten.no/authorize?client_id=b2e94622-fc67-4a4a-9453-0276f07d06f1&response_type=code&scope=openid&redirect_uri=https://elevpc.rogfk.no/elev/oauth_callback&acr_values=idporten-loa-substantial&nonce=jqgGyUOqN9Q7ZuMaWvyb&state=pUXDLzQ0Q2JEJbnB7Nbe&code_challenge=Ke_vHwwhsxQW7F6Ra37nfDk5q6CcEbcMEx110ZJ-M50&code_challenge_method=S256" target="_blank">
-        <button type="button" class="btn btn-primary">Identifiser deg med ID-porten</button>
-    </a>
+
+    <!-- Center the buttons inside a flexbox container -->
+    <div class="center-buttons">
+        <button type="button" class="btn btn-primary" id="get-products">Hent Elevmacprodukter</button>
+        
+        <a href="https://login.idporten.no/authorize?client_id=b2e94622-fc67-4a4a-9453-0276f07d06f1&response_type=code&scope=openid&redirect_uri=https://elevpc.rogfk.no/elev/oauth_callback&acr_values=idporten-loa-substantial&nonce=jqgGyUOqN9Q7ZuMaWvyb&state=pUXDLzQ0Q2JEJbnB7Nbe&code_challenge=Ke_vHwwhsxQW7F6Ra37nfDk5q6CcEbcMEx110ZJ-M50&code_challenge_method=S256" target="_blank">
+            <button type="button" class="btn btn-primary">Identifiser deg med ID-porten</button>
+        </a>
+    </div>
+
     <div id="output"></div>
 
     <script>
@@ -125,5 +138,6 @@
             });
         });
     </script>
+
 </body>
 </html>
