@@ -11,6 +11,19 @@
             padding: 20px;
         }
 
+        /* Banner styling */
+        .banner {
+            background-color: black;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .banner img {
+            width: 150px; /* Adjust this value to change the logo size */
+            height: auto;
+        }
+
+        /* Product card styling */
         .product-card {
             display: flex;
             align-items: flex-start;
@@ -50,8 +63,13 @@
     </style>
 </head>
 <body>
+    <!-- Black banner with logo -->
+    <div class="banner">
+        <img src="https://cdn.shopify.com/s/files/1/0893/8691/0010/files/logo.svg?v=1725950904" alt="Logo">
+    </div>
+
     <h1>Test Shopify API</h1>
-    <button id="get-products">Get Products</button>
+    <button id="get-products">Hent Elevmacprodukter</button>
     <div id="output"></div>
 
     <script>
