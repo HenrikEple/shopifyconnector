@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 exports.handler = async function(event, context) {
     const shopifyStorefrontToken = process.env.Shopify_storefront_token; // Your Storefront API token
     const shopifyStore = 'eplehusettest.myshopify.com'; // Replace with your actual Shopify store URL
-    const graphqlEndpoint = `https://${shopifyStore}/api/2023-01/graphql.json`;
+    const graphqlEndpoint = `https://${shopifyStore}/api/2023-10/graphql.json`;
 
     // Parse the request body to get the already encoded variant ID and quantity
     const { id, quantity } = JSON.parse(event.body);
