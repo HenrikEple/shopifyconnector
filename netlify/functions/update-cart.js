@@ -5,11 +5,8 @@ exports.handler = async function(event, context) {
     const shopifyStore = 'eplehusettest.myshopify.com'; // Replace with your actual Shopify store URL
     const graphqlEndpoint = `https://${shopifyStore}/api/2023-01/graphql.json`;
 
-    // Parse the request body to get the variant ID and quantity
+    // Parse the request body to get the already encoded variant ID and quantity
     const { id, quantity } = JSON.parse(event.body);
-
-    // Convert the numeric variant ID to a global ID (Base64 encoded)
-    const globalVariantId = Buffer.from(`gid://shopify/ProductVariant/${id}`).toString('base64');
 
     const query = `
         mutation checkoutCreate($input: CheckoutCreateInput!) {
@@ -38,7 +35,7 @@ exports.handler = async function(event, context) {
         input: {
             lineItems: [
                 {
-                    variantId: globalVariantId, // Use the Base64-encoded variant ID here
+                    variantId: id, // The variant ID is already encoded
                     quantity: quantity
                 }
             ]
