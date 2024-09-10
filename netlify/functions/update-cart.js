@@ -3,46 +3,56 @@ const fetch = require('node-fetch');
 exports.handler = async function(event, context) {
     const shopifyStorefrontToken = process.env.Shopify_storefront_token; // Your Storefront API token
     const shopifyStore = 'eplehusettest.myshopify.com'; // Replace with your actual Shopify store URL
-    const graphqlEndpoint = `https://${shopifyStore}/api/2023-10/graphql.json`;
+    const graphqlEndpoint = `https://${shopifyStore}/api/2023-01/graphql.json`;
 
-    // Parse the request body to get the already encoded variant ID and quantity
-    const { id, quantity } = JSON.parse(event.body);
+    try {
+        // Log incoming request for debugging
+        console.log('Received request:', event.body);
 
-    const query = `
-        mutation checkoutCreate($input: CheckoutCreateInput!) {
-            checkoutCreate(input: $input) {
-                checkout {
-                    id
-                    webUrl
-                    lineItems(first: 5) {
-                        edges {
-                            node {
-                                title
-                                quantity
+        // Parse the request body to get the variant ID and quantity
+        const { id, quantity } = JSON.parse(event.body);
+
+        // Log parsed data for debugging
+        console.log('Parsed ID:', id);
+        console.log('Parsed quantity:', quantity);
+
+        const query = `
+            mutation checkoutCreate($input: CheckoutCreateInput!) {
+                checkoutCreate(input: $input) {
+                    checkout {
+                        id
+                        webUrl
+                        lineItems(first: 5) {
+                            edges {
+                                node {
+                                    title
+                                    quantity
+                                }
                             }
                         }
                     }
-                }
-                userErrors {
-                    field
-                    message
+                    userErrors {
+                        field
+                        message
+                    }
                 }
             }
-        }
-    `;
+        `;
 
-    const variables = {
-        input: {
-            lineItems: [
-                {
-                    variantId: id, // The variant ID is already encoded
-                    quantity: quantity
-                }
-            ]
-        }
-    };
+        const variables = {
+            input: {
+                lineItems: [
+                    {
+                        variantId: id, // The variant ID is already encoded
+                        quantity: quantity
+                    }
+                ]
+            }
+        };
 
-    try {
+        // Log request to Shopify for debugging
+        console.log('Sending request to Shopify Storefront API...');
+
         const response = await fetch(graphqlEndpoint, {
             method: 'POST',
             headers: {
@@ -63,6 +73,9 @@ exports.handler = async function(event, context) {
 
         const data = await response.json();
 
+        // Log response from Shopify for debugging
+        console.log('Shopify API Response:', data);
+
         if (data.errors || data.data.checkoutCreate.userErrors.length) {
             const errors = data.errors || data.data.checkoutCreate.userErrors;
             console.error('User Errors:', errors);
@@ -74,6 +87,7 @@ exports.handler = async function(event, context) {
             body: JSON.stringify(data),
         };
     } catch (error) {
+        // Log the actual error for debugging
         console.error('Error occurred:', error.message);
         return {
             statusCode: 500,
