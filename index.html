@@ -104,8 +104,8 @@
 
     <script>
         document.getElementById('add-to-cart').addEventListener('click', async function() {
-            const variantId = '49556331692346';
-            const globalVariantId = Buffer.from(`gid://shopify/ProductVariant/${variantId}`).toString('base64');
+            const productVariantId = '49556331692346'; // Replace with actual variant ID
+            const globalVariantId = btoa(`gid://shopify/ProductVariant/${productVariantId}`); // Encode using btoa()
 
             try {
                 const response = await fetch('/.netlify/functions/update-cart', {
@@ -114,7 +114,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        id: productVariantId,
+                        id: globalVariantId,
                         quantity: 1
                     })
                 });
