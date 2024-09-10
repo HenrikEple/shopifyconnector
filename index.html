@@ -104,7 +104,7 @@
 
     <script>
         document.getElementById('add-to-cart').addEventListener('click', async function() {
-            const productVariantId = '49557012742458'; // Replace with actual variant ID
+            const productVariantId = '49556331692346'; // Replace with actual variant ID
 
             try {
                 const response = await fetch('/.netlify/functions/update-cart', {
@@ -123,13 +123,13 @@
                 }
 
                 const data = await response.json();
-                alert('Product added to cart successfully!');
+                alert('Product added to checkout successfully!');
                 console.log(data);
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to add product to cart.');
+                alert('Failed to add product to checkout.');
             }
-        });        
+        });       
         document.getElementById('get-products').addEventListener('click', async function() {
             const response = await fetch('/.netlify/functions/shopify-api');
             const data = await response.json();
