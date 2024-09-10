@@ -4,6 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopify API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .product-card {
+            display: flex;
+            align-items: flex-start;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card img {
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        .product-info {
+            max-width: 600px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Test Shopify API</h1>
@@ -14,7 +58,39 @@
         document.getElementById('get-products').addEventListener('click', async function() {
             const response = await fetch('/.netlify/functions/shopify-api');
             const data = await response.json();
-            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+            const products = data.products;
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = ''; // Clear any previous content
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+
+                const productImage = document.createElement('img');
+                productImage.src = product.image ? product.image.src : 'placeholder.png';  // Fallback to placeholder if no image
+                productCard.appendChild(productImage);
+
+                const productInfo = document.createElement('div');
+                productInfo.classList.add('product-info');
+
+                const productTitle = document.createElement('div');
+                productTitle.classList.add('product-title');
+                productTitle.textContent = product.title;
+                productInfo.appendChild(productTitle);
+
+                const productPrice = document.createElement('div');
+                productPrice.classList.add('product-price');
+                productPrice.textContent = `Price: ${product.variants[0].price} ${product.variants[0].currency || 'USD'}`;  // Show price
+                productInfo.appendChild(productPrice);
+
+                const productDescription = document.createElement('div');
+                productDescription.classList.add('product-description');
+                productDescription.innerHTML = product.body_html;  // Include the description
+                productInfo.appendChild(productDescription);
+
+                productCard.appendChild(productInfo);
+                outputDiv.appendChild(productCard);
+            });
         });
     </script>
 </body>
