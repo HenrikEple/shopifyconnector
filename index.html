@@ -98,39 +98,15 @@
     </div>
 
     <div id="output"></div>
-    <div class="center-buttons"></div>
-        <button type="button" class="btn btn-primary" id="add-to-cart">Legg produkt til handlekurv</button>
-    </div>
+
+    // The minified `0.2.3` version of the Storefront API Client
+    <script src="https://unpkg.com/@shopify/storefront-api-client@0.2.3/dist/umd/storefront-api-client.min.js"></script>
 
     <script>
-        document.getElementById('add-to-cart').addEventListener('click', async function() {
-            const productVariantId = '49556331692346'; // Replace with actual variant ID
-            const globalVariantId = btoa(`gid://shopify/ProductVariant/${productVariantId}`); // Encode using btoa()
+        const client = ShopifyStorefrontAPIClient.createStorefrontApiClient({...});
+    </script>
 
-            try {
-                const response = await fetch('/.netlify/functions/update-cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id: globalVariantId,
-                        quantity: 1
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to add product to cart');
-                }
-
-                const data = await response.json();
-                alert('Product added to checkout successfully!');
-                console.log(data);
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to add product to checkout.');
-            }
-        });       
+    <script>
         document.getElementById('get-products').addEventListener('click', async function() {
             const response = await fetch('/.netlify/functions/shopify-api');
             const data = await response.json();
